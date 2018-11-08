@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using NetworkExtension;
 
 namespace Plataforms
 {
@@ -8,7 +6,9 @@ namespace Plataforms
     {
         static int PlataformSignal()
         {
-            return 1;
+            var p = new NEHotspotNetwork();
+            var signal = (int)(p.SignalStrength) * 5; // Normalize 0 - 1 to 0 - 5
+            return signal;
         }
     }
 }

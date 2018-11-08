@@ -19,7 +19,7 @@ namespace Plataforms
 
             var info = wifiManager.ConnectionInfo;
 
-            var lvl = WifiManager.CalculateSignalLevel(info.Rssi, 5);
+            var lvl = WifiManager.CalculateSignalLevel(info.Rssi, 6);
 
             return lvl;
         }

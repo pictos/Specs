@@ -17,6 +17,12 @@ namespace Specs.ViewModels
             get { return signal; }
             set { SetProperty(ref signal, value); }
         }
+        public Command SignalCommand => new Command(ExecuteSignalCommand);
+
+        private void ExecuteSignalCommand()
+        {
+            Signal = $" Signal power : {Plataforms.Signal.SignalStrenght}";
+        }
 
         public override Task InitializeAsync(object[] args)
         {

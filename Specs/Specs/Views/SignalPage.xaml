@@ -4,9 +4,15 @@
              x:Class="Specs.Views.SignalPage">
     <ContentPage.Content>
         <StackLayout>
+            
             <Label Text="{Binding Signal}"
                    VerticalOptions="CenterAndExpand" 
                    HorizontalOptions="CenterAndExpand" />
+            
+            <Button Text="Get Signal"
+                    Command="{Binding SignalCommand}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
