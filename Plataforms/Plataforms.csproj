@@ -52,5 +52,4 @@
     <Compile Include="**\*.netstandard.*.cs" />
   </ItemGroup>
 
-  
 </Project>

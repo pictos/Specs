@@ -4,6 +4,6 @@ namespace Plataforms
 {
     public static partial class Signal
     {
-        static int PlataformSignal() => throw new NotImplementedException();
+        static SignalStrength PlataformSignal() => throw new NotImplementedException();
     }
 }

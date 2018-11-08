@@ -1,8 +1,4 @@
-﻿using Specs.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Specs.ViewModels
@@ -19,14 +15,11 @@ namespace Specs.ViewModels
         }
         public Command SignalCommand => new Command(ExecuteSignalCommand);
 
-        private void ExecuteSignalCommand()
-        {
+        void ExecuteSignalCommand() => 
             Signal = $" Signal power : {Plataforms.Signal.SignalStrenght}";
-        }
 
         public override Task InitializeAsync(object[] args)
         {
-          //  Signal = DependencyService.Get<IWifi>().SignalStrength();
             Signal = $" Signal power : {Plataforms.Signal.SignalStrenght}";
             return Task.CompletedTask;
         }
