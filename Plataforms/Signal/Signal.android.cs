@@ -1,9 +1,6 @@
 ﻿using Android.App;
 using Android.Net.Wifi;
 using System;
-using System.Collections.Generic;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
 
 namespace Plataforms
 {
