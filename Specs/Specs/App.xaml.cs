@@ -11,7 +11,7 @@ namespace Specs
         {
             InitializeComponent();
 
-            MainPage = new Views.AudioPage();
+            MainPage = new Views.ContactPage();
         }
 
         protected override void OnStart()

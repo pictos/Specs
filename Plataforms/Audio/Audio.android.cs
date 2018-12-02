@@ -14,7 +14,7 @@ namespace Plataforms
         static void PlataformRingTone()
         {
             GetAudioManager();
-            am.RingerMode = RingerMode.;
+            am.RingerMode = RingerMode.Normal;
         }
 
         static void PlataformIncreaseVolume(int volume)
