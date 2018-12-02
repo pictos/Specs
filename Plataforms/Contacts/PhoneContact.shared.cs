@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Plataforms
 {
     public readonly struct PhoneContact : IEquatable<PhoneContact>
     {
         public string Name { get; }
-        public string Number { get; }
-        public string Email { get; }
-     
-        internal PhoneContact(string name, string number, string email)
+        public IEnumerable<string> Numbers { get; }
+        public IEnumerable<string> Emails { get; }
+
+        internal PhoneContact(string name, IEnumerable<string> numbers, IEnumerable<string> emails)
         {
             Name = name;
-            Number = number;
-            Email = email;
+            Numbers = numbers;
+            Emails = emails;
         }
 
         public static bool operator ==(PhoneContact left, PhoneContact right) =>
@@ -25,9 +26,9 @@ namespace Plataforms
         (obj is PhoneContact contact) && Equals(contact);
 
         public bool Equals(PhoneContact other) =>
-            (Name, Number, Email) == (other.Name, other.Number, other.Email);
+            (Name, Numbers, Emails) == (other.Name, other.Numbers, other.Emails);
 
         public override int GetHashCode() =>
-            (Name, Number, Email).GetHashCode();
+            (Name, Numbers, Emails).GetHashCode();
     }
 }

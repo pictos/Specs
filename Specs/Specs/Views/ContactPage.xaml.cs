@@ -1,5 +1,7 @@
 ﻿using Plataforms;
 using Specs.ViewModels;
+using System.Collections;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace Specs.Views
@@ -21,10 +23,24 @@ namespace Specs.Views
         async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             if(!(e.Item is PhoneContact contact)) return;
+            string numbers = List2String(contact.Numbers);
+            string emails = List2String(contact.Emails);
 
-            var info = $"Number: {contact.Number} Email: {contact.Email}";
+            var info = $"Number: {numbers} Email: {emails}";
 
             await DisplayAlert(contact.Name, info, "ok");
+
+            (sender as ListView).SelectedItem = null;
+        }
+
+        string List2String(IEnumerable<string> contacts)
+        {
+            string x = null;
+
+            foreach (var item in contacts)            
+                x += item + ",";
+
+            return x;
         }
     }
 }

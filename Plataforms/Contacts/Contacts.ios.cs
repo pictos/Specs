@@ -1,6 +1,7 @@
 ﻿using Contacts;
 using Foundation;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Plataforms
 {
@@ -22,17 +23,15 @@ namespace Plataforms
 
             foreach (var item in contactList)
             {
-                var numbers = item.PhoneNumbers;
-                if(!(numbers is null))
-                {
-                    foreach (var i in numbers)
-                    {
-                        contacts.Add(new PhoneContact(
-                            item.GivenName + item.FamilyName, 
-                            i.Value.StringValue,
-                            item.EmailAddresses[0].Value));
-                    }
-                }
+
+                var numbers = item.PhoneNumbers.Select(x => x.Value.StringValue);
+                var emails = item.EmailAddresses.Select(x => x.Value.ToString());
+
+                contacts.Add(new PhoneContact(
+                    item.GivenName + item.FamilyName,
+                    numbers,
+                    emails));
+
             }
 
             return contacts;
