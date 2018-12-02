@@ -16,7 +16,7 @@ namespace Plataforms
            
             var uri = ContactsContract.CommonDataKinds.Phone.ContentUri;
 
-            string[] phoneprojection =
+            string[] projection =
             {
                 ContactsContract.Contacts.InterfaceConsts.Id,
                 ContactsContract.Contacts.InterfaceConsts.DisplayName,
@@ -29,17 +29,17 @@ namespace Plataforms
                 Looper.Prepare();
             
 
-            var loader = new CursorLoader(Application.Context, uri, phoneprojection, null, null, null);
+            var loader = new CursorLoader(Application.Context, uri, projection, null, null, null);
             var cursor = (ICursor)loader.LoadInBackground();
             if (cursor.MoveToFirst())
             {
                 do
                 {
-                    var contactId = cursor.GetLong(cursor.GetColumnIndex(phoneprojection[0]));
-                    var name = cursor.GetString(cursor.GetColumnIndex(phoneprojection[1]));
-                    var phone = cursor.GetString(cursor.GetColumnIndex(phoneprojection[2]));
-                    var email = cursor.GetString(cursor.GetColumnIndex(phoneprojection[4]));
-                    var photo = cursor.GetString(cursor.GetColumnIndex(phoneprojection[3]));
+                    var contactId = cursor.GetLong(cursor.GetColumnIndex(projection[0]));
+                    var name = cursor.GetString(cursor.GetColumnIndex(projection[1]));
+                    var phone = cursor.GetString(cursor.GetColumnIndex(projection[2]));
+                    var email = cursor.GetString(cursor.GetColumnIndex(projection[4]));
+                    var photo = cursor.GetString(cursor.GetColumnIndex(projection[3]));
 
                     phoneContacts.Add(new PhoneContact(name+" "+contactId.ToString(), new[] { phone }, new[] { email }));
 
