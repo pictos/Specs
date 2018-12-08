@@ -6,14 +6,14 @@ namespace Plataforms
     public readonly struct PhoneContact : IEquatable<PhoneContact>
     {
         public string Name { get; }
-        public IEnumerable<string> Numbers { get; }
-        public IEnumerable<string> Emails { get; }
+        public List<string> Numbers { get; }
+        public List<string> Emails { get; }
 
         internal PhoneContact(string name, IEnumerable<string> numbers, IEnumerable<string> emails)
         {
             Name = name;
-            Numbers = numbers;
-            Emails = emails;
+            Numbers = new List<string>(numbers);
+            Emails = new List<string>(emails);
         }
 
         public static bool operator ==(PhoneContact left, PhoneContact right) =>

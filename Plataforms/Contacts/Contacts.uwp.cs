@@ -1,34 +1,78 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
+
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Contacts;
 
 namespace Plataforms
 {
     static partial class Contacts
     {
-        static IEnumerable<PhoneContact> PlataformGetContacts()
+        static async void PlataformGetContacts(int ncontact)
         {
-            var contactStore = ContactManager.RequestStoreAsync().AsTask().GetAwaiter().GetResult();
-            var contacts = contactStore.FindContactsAsync().AsTask().GetAwaiter().GetResult();
-            if (contacts is null) return null;
-
             var phoneContacts = new List<PhoneContact>();
+
+            var contactStore = await ContactManager.RequestStoreAsync();
+            //var contacts = contactStore.FindContactsAsync().AsTask().GetAwaiter().GetResult();
+            var contacts = await contactStore.FindContactsAsync();
+
+            var i = 0;
+
             foreach (var item in contacts)
             {
-                //if (item.IsMe)
-                //    break;
+                Manualreset.WaitOne();
 
 
-                var phones = item.Phones.Select(x => x.Number);
-                var emails = item.Emails.Select(x => x.Address);
-                //var phone = (item.Phones.Count > 0) ? item.Phones[0].Number : " ";
-                //var email = (item.Emails.Count > 0) ? item.Emails[0].Address : " ";
+                if (ncontact == i)
+                {
+                    Manualreset.Reset();
+                    CallBack?.Invoke(null, new CallBackArgs(Manualreset, phoneContacts));
+                }
+
+                var phones = item.Phones.Select(p => p.Number);
+                var emails = item.Emails.Select(e => e.Address);
+                var address = item.Addresses.Select(a => a.StreetAddress);
+                var name = item.FirstName + item.MiddleName + item.LastName;
+                var data = item.ImportantDates;
+                
+
 
                 phoneContacts.Add(new PhoneContact(item.DisplayName, phones, emails));
+                i++;
             }
 
-            return phoneContacts;
+            //contacts.ContinueWith(result =>
+            //{
+            //    if (!(contacts is null))
+            //    {
+            //        var i = 0;
+
+            //        foreach (var item in result.GetAwaiter().GetResult())
+            //        {
+            //            Manualreset.WaitOne();
+
+
+            //            if (ncontact == i)
+            //            {
+            //                Manualreset.Reset();
+            //                CallBack?.Invoke(null, new CallBackArgs(Manualreset, phoneContacts));
+            //            }
+
+            //            var phones = item.Phones.Select(p => p.Number);
+            //            var emails = item.Emails.Select(e => e.Address);
+            //            var address = item.
+
+
+            //            phoneContacts.Add(new PhoneContact(item.DisplayName, phones, emails));
+            //            i++;
+            //        }
+            //    }
+            //});
+
+
+
+
         }
     }
 }

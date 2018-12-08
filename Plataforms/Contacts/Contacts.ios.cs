@@ -2,12 +2,13 @@
 using Foundation;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Plataforms
 {
     static partial class Contacts
     {
-        static IEnumerable<PhoneContact> PlataformGetContacts()
+        static void PlataformGetContacts(int ncontact)
         {
             var keysToFetch = new[] { CNContactKey.GivenName, CNContactKey.FamilyName, CNContactKey.PhoneNumbers, CNContactKey.EmailAddresses };
 
@@ -34,7 +35,7 @@ namespace Plataforms
 
             }
 
-            return contacts;
+          //  return Task.FromResult(contacts.AsEnumerable());
         }
     }
 }

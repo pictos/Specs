@@ -14,6 +14,7 @@ namespace Specs.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             Plataforms.Signal.Current = this;
+            Plataforms.Contacts.MyContext = this;
 
             base.OnCreate(savedInstanceState);
             Current = this;

@@ -3,10 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Specs.Views.ContactPage">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="10">
             <Label Text="Loaded"
                HorizontalOptions="Center"
-               FontAttributes="Bold"/>
+               FontAttributes="Bold">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LoadCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
             <ListView ItemsSource="{Binding Contacts}"
                   ItemTapped="ListView_ItemTapped"
                   CachingStrategy="RecycleElement">
