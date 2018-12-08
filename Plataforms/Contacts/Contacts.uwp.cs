@@ -38,7 +38,7 @@ namespace Plataforms
                 
 
 
-                phoneContacts.Add(new PhoneContact(item.DisplayName, phones, emails));
+                phoneContacts.Add(new PhoneContact(item.DisplayName, phones, emails,null));
                 i++;
             }
 

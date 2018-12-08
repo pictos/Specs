@@ -2,6 +2,7 @@
 using Android.Provider;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Plataforms
@@ -59,7 +60,7 @@ namespace Plataforms
 
                     eCur.Close();
 
-                    contacts.Add(new PhoneContact(name, phoneNumber, emails));
+                    contacts.Add(new PhoneContact(name, phoneNumber, emails,null));
                 }
             }
         }
@@ -166,11 +167,31 @@ namespace Plataforms
                             emails.Add(email);
                         }
 
-                        eCur.Close();
+                        var projectionB = new[]
+                        {
+                            ContactsContract.Contacts.InterfaceConsts.Id, ContactsContract.CommonDataKinds.Event.StartDate
+                        };
 
-                        phoneContacts.Add(new PhoneContact(name, phoneNumber, emails));
+                        var query = ContactsContract.CommonDataKinds.CommonColumns.Type + " = " + 3
+                       +" AND " + ContactsContract.CommonDataKinds.Event.InterfaceConsts.ContactId + " = ?";
+
+                        var bCur = context.Query(ContactsContract.Data.ContentUri, projectionB, query, new string[] { id }, null);
+
+                        string e = null;
+                        while (bCur.MoveToNext())
+                        {
+                            var b = bCur.GetString(bCur.GetColumnIndex(projectionB[1]));
+                            DateTime.TryParse(b, out DateTime d);
+                            e = d.ToShortDateString().Contains("1/1/0001") ? string.Empty 
+                                : d.ToShortDateString();
+                        }
+
+                        eCur.Close();
+                        
+                        phoneContacts.Add(new PhoneContact(name, phoneNumber, emails,e));
                         emails.Clear();
                         phoneNumber.Clear();
+                        
                     }
                 }
             }

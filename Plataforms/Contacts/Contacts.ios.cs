@@ -31,7 +31,8 @@ namespace Plataforms
                 contacts.Add(new PhoneContact(
                     item.GivenName + item.FamilyName,
                     numbers,
-                    emails));
+                    emails,
+                    "123"));
 
             }
 

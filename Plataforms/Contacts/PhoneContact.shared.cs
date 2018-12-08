@@ -9,9 +9,12 @@ namespace Plataforms
         public List<string> Numbers { get; }
         public List<string> Emails { get; }
 
-        internal PhoneContact(string name, IEnumerable<string> numbers, IEnumerable<string> emails)
+        public string BirthDay { get; }
+
+        internal PhoneContact(string name, IEnumerable<string> numbers, IEnumerable<string> emails, string bd)
         {
             Name = name;
+            BirthDay = bd;
             Numbers = new List<string>(numbers);
             Emails = new List<string>(emails);
         }
