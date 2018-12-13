@@ -28,6 +28,7 @@ namespace Plataforms
                 var numbers = item.PhoneNumbers.Select(x => x.Value.StringValue);
                 var emails = item.EmailAddresses.Select(x => x.Value.ToString());
                 var bd = item.Birthday.Date.ToString();
+                var address = item.PostalAddresses.Select(x => x.Value.ToString());
                 contacts.Add(new PhoneContact(
                     item.GivenName + item.FamilyName,
                     numbers,

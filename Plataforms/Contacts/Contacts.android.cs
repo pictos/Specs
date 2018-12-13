@@ -2,202 +2,232 @@
 using Android.Provider;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+using static Android.Provider.ContactsContract.CommonDataKinds;
 
 namespace Plataforms
 {
     static partial class Contacts
     {
         public static Activity MyContext { get; set; }
-        static void Getall()
-        {
-            string[] projection =
-            {
-                ContactsContract.Contacts.InterfaceConsts.Id,
-                ContactsContract.Contacts.InterfaceConsts.DisplayName,
-                ContactsContract.CommonDataKinds.Phone.Number,
-                ContactsContract.Contacts.InterfaceConsts.PhotoId,
-                ContactsContract.CommonDataKinds.Email.Address
-            };
-            var phoneNumber = new List<string>();
-            var emails = new List<string>();
-            var contacts = new List<PhoneContact>();
-
-            var context = MyContext.ContentResolver;
-            var cur = context.Query(ContactsContract.CommonDataKinds.Phone.ContentUri, projection, null, null);
-
-            if (cur.Count > 0)
-            {
-                while (cur.MoveToNext())
-                {
-                    var id = cur.GetString(cur.GetColumnIndex(ContactsContract.Contacts.InterfaceConsts.Id));
-                    var name = cur.GetString(cur.GetColumnIndex(ContactsContract.Contacts.InterfaceConsts.DisplayName));
-                    var image = cur.GetString(cur.GetColumnIndex(ContactsContract.CommonDataKinds.Phone.InterfaceConsts.PhotoUri));
-
-                    if (int.Parse(ContactsContract.Contacts.InterfaceConsts.HasPhoneNumber) > 0)
-                    {
-                        var pCur = context.Query(ContactsContract.CommonDataKinds.Phone.ContentUri, null,
-                            ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId + " = ?", new string[] { id }, null);
-
-                        while (pCur.MoveToNext())
-                        {
-                            var phone = pCur.GetString(pCur.GetColumnIndex(ContactsContract.CommonDataKinds.Phone.Number));
-                            phoneNumber.Add($"Numero: {phone}");
-                        }
-
-                        pCur.Close();
-                    }
-
-                    var eCur = context.Query(ContactsContract.CommonDataKinds.Email.ContentUri, null,
-                        ContactsContract.CommonDataKinds.Email.InterfaceConsts.ContactId + " = ?", new string[] { id }, null);
-
-                    while (eCur.MoveToNext())
-                    {
-                        var email = eCur.GetString(eCur.GetColumnIndex(ContactsContract.CommonDataKinds.Email.Address));
-                        emails.Add(email);
-                    }
-
-                    eCur.Close();
-
-                    contacts.Add(new PhoneContact(name, phoneNumber, emails,null));
-                }
-            }
-        }
 
         static void PlataformGetContacts(int ncontact)
         {
             try
             {
-                Teste();
+                //Teste();
+                Final();
             }
             catch (System.Exception ex)
             {
-
                 throw ex;
             }
-            //var contacts = new List<PhoneContact>();
 
-            //var uri = ContactsContract.CommonDataKinds.Phone.ContentUri;
-
-            //string[] projection =
-            //{
-            //    ContactsContract.Contacts.InterfaceConsts.Id,
-            //    ContactsContract.Contacts.InterfaceConsts.DisplayName,
-            //    ContactsContract.CommonDataKinds.Phone.Number,
-            //    ContactsContract.Contacts.InterfaceConsts.PhotoId,
-            //    ContactsContract.CommonDataKinds.Email.Address
-            //};
-
-
-
-            //if (Looper.MyLooper() is null)
-            //    Looper.Prepare();
-
-
-            //var loader = new CursorLoader(Application.Context, uri, projection, null, null, null);
-            //var cursor = (ICursor)loader.LoadInBackground();
-            //if (cursor.MoveToFirst())
-            //{
-            //    do
-            //    {
-            //        var contactId = cursor.GetLong(cursor.GetColumnIndex(projection[0]));
-            //        var name = cursor.GetString(cursor.GetColumnIndex(projection[1]));
-            //        var phone = cursor.GetString(cursor.GetColumnIndex(projection[2]));
-            //        var email = cursor.GetString(cursor.GetColumnIndex(projection[4]));
-            //        var photo = cursor.GetString(cursor.GetColumnIndex(projection[3]));
-
-            //        contacts.Add(new PhoneContact(name + " " + contactId.ToString(), new[] { phone }, new[] { email }));
-
-            //    } while (cursor.MoveToNext());
-            //}
-
-            //    return Task.FromResult(contacts.AsEnumerable());
         }
 
-        static void Teste()
+        #region Teste
+        //static void Teste()
+        //{
+        //    var phoneContacts = new List<PhoneContact>();
+        //    var uri = ContactsContract.Contacts.ContentUri;
+        //    var context = Android.App.Application.Context.ContentResolver;
+        //    var phoneNumber = new List<string>();
+        //    var emails = new List<string>();
+        //    var projection = new[]
+        //    {
+        //        ContactsContract.Contacts.InterfaceConsts.DisplayName,
+        //        Email.Address,
+        //        Phone.Number,
+        //        StructuredPostal.Street
+        //    };
+        //    var cur = Android.App.Application.Context.ContentResolver.Query
+        //         (uri, null, null, null, null);
+
+        //    if (cur is null | cur.Count == 0)
+        //        return;
+
+        //    while (cur.MoveToNext())
+        //    {
+        //        if (cur.Count > 0)
+        //        {
+        //            while (cur.MoveToNext())
+        //            {
+        //                var id = cur.GetString(cur.GetColumnIndex(ContactsContract.Contacts.InterfaceConsts.Id));
+        //                var name = cur.GetString(cur.GetColumnIndex(ContactsContract.Contacts.InterfaceConsts.DisplayName));
+        //                var image = cur.GetString(cur.GetColumnIndex(ContactsContract.CommonDataKinds.Phone.InterfaceConsts.PhotoUri));
+
+        //                #region PhoneNumber
+        //                if (ContactsContract.Contacts.InterfaceConsts.HasPhoneNumber.Length > 0)
+        //                {
+        //                    var pCur = context.Query(ContactsContract.CommonDataKinds.Phone.ContentUri, null,
+        //                        ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId + " = ?", new string[] { id }, null);
+
+        //                    while (pCur.MoveToNext())
+        //                    {
+        //                        var phone = pCur.GetString(pCur.GetColumnIndex(ContactsContract.CommonDataKinds.Phone.Number));
+        //                        phoneNumber.Add($"Numero: {phone}");
+        //                    }
+
+        //                    pCur.Close();
+        //                }
+        //                #endregion
+
+        //                #region Email
+        //                var eCur = context.Query(ContactsContract.CommonDataKinds.Email.ContentUri, null,
+        //                                ContactsContract.CommonDataKinds.Email.InterfaceConsts.ContactId + " = ?", new string[] { id }, null);
+
+        //                while (eCur.MoveToNext())
+        //                {
+        //                    var email = eCur.GetString(eCur.GetColumnIndex(ContactsContract.CommonDataKinds.Email.Address));
+        //                    emails.Add(email);
+        //                }
+
+        //                eCur.Close();
+        //                #endregion
+
+        //                #region BirthDay
+        //                var projectionB = new[]
+        //                             {
+        //                    ContactsContract.Contacts.InterfaceConsts.Id, ContactsContract.CommonDataKinds.Event.StartDate
+        //                };
+
+        //                var query = ContactsContract.CommonDataKinds.CommonColumns.Type + " = " + 3
+        //               + " AND " + ContactsContract.CommonDataKinds.Event.InterfaceConsts.ContactId + " = ?";
+
+        //                var bCur = context.Query(ContactsContract.Data.ContentUri, projectionB, query, new string[] { id }, null);
+
+        //                string e = null;
+        //                while (bCur.MoveToNext())
+        //                {
+        //                    var b = bCur.GetString(bCur.GetColumnIndex(projectionB[1]));
+        //                    DateTime.TryParse(b, out DateTime d);
+        //                    e = d.ToShortDateString().Contains("1/1/0001") ? string.Empty
+        //                        : d.ToShortDateString();
+        //                }
+
+        //                bCur.Close();
+        //                #endregion
+
+        //                #region StreetAddress
+
+        //                var projectionS = new[] { StructuredPostal.Street, StructuredPostal.City, StructuredPostal.Postcode };
+        //                var queryS = ContactsContract.Data.InterfaceConsts.ContactId;
+
+        //                var sd = context.Query(ContactsContract.Data.ContentUri,
+        //                    projectionS, queryS, new string[] { id, StructuredPostal.ContentItemType }, null);
+
+        //                var street = sd.GetString(sd.GetColumnIndex(projection[0]));
+        //                var city = sd.GetString(sd.GetColumnIndex(projection[1]));
+        //                var postCode = sd.GetString(sd.GetColumnIndex(projection[2]));
+
+        //                sd.Close();
+
+        //                #endregion
+
+        //                phoneContacts.Add(new PhoneContact(name, phoneNumber, emails, e));
+        //                emails.Clear();
+        //                phoneNumber.Clear();
+
+        //            }
+        //        }
+        //    }
+
+        //    var batata = phoneContacts[5].Emails.FirstOrDefault();
+        //    cur.Close();
+        //} 
+        #endregion
+
+        static void Final()
         {
-            var phoneContacts = new List<PhoneContact>();
-            var uri = ContactsContract.Contacts.ContentUri;
-            var context = Android.App.Application.Context.ContentResolver;
-            var phoneNumber = new List<string>();
-            var emails = new List<string>();
-            var projection = new[]
+            try
             {
-                ContactsContract.Contacts.InterfaceConsts.DisplayName,
-                ContactsContract.CommonDataKinds.Email.Address,
-                ContactsContract.CommonDataKinds.Phone.Number
-            };
-            var cur = Android.App.Application.Context.ContentResolver.Query
-                 (uri, null, null, null, null);
+                var phoneContacts = new List<PhoneContact>();
+                var uri = ContactsContract.Contacts.ContentUri;
+                var context = Application.Context.ContentResolver;
+                var phoneNumbers = new List<string>();
+                var emails = new List<string>();
 
-            if (cur is null | cur.Count == 0)
-                return;
+                var cur = context.Query(uri, null, null, null, null);
 
-            while (cur.MoveToNext())
-            {
-                if (cur.Count > 0)
+                if (cur is null | cur.Count == 0) return;
+
+                while (cur.MoveToNext())
                 {
-                    while (cur.MoveToNext())
+                    var id = cur.GetString(cur.GetColumnIndexOrThrow(ContactsContract.Contacts.InterfaceConsts.Id));
+                    var name = cur.GetString(cur.GetColumnIndex(ContactsContract.Contacts.InterfaceConsts.DisplayName));
+
+                    #region PhoneNumber
+                    var idQ = new string[] { id };
+                    if (ContactsContract.Contacts.InterfaceConsts.HasPhoneNumber.Length > 0)
                     {
-                        var id = cur.GetString(cur.GetColumnIndex(ContactsContract.Contacts.InterfaceConsts.Id));
-                        var name = cur.GetString(cur.GetColumnIndex(ContactsContract.Contacts.InterfaceConsts.DisplayName));
-                        var image = cur.GetString(cur.GetColumnIndex(ContactsContract.CommonDataKinds.Phone.InterfaceConsts.PhotoUri));
-
-                        if (ContactsContract.Contacts.InterfaceConsts.HasPhoneNumber.Length > 0)
+                        var pCur = context.Query(ContactsContract.CommonDataKinds.Phone.ContentUri, null, Phone.InterfaceConsts.ContactId + " = ?", idQ, null);
+                        while (pCur.MoveToNext())
                         {
-                            var pCur = context.Query(ContactsContract.CommonDataKinds.Phone.ContentUri, null,
-                                ContactsContract.CommonDataKinds.Phone.InterfaceConsts.ContactId + " = ?", new string[] { id }, null);
-
-                            while (pCur.MoveToNext())
-                            {
-                                var phone = pCur.GetString(pCur.GetColumnIndex(ContactsContract.CommonDataKinds.Phone.Number));
-                                phoneNumber.Add($"Numero: {phone}");
-                            }
-
-                            pCur.Close();
+                            var phone = pCur.GetString(pCur.GetColumnIndex(Phone.Number));
+                            phoneNumbers.Add(phone);
                         }
+                        pCur.Close();
+                    }
+                    #endregion
 
-                        var eCur = context.Query(ContactsContract.CommonDataKinds.Email.ContentUri, null,
-                            ContactsContract.CommonDataKinds.Email.InterfaceConsts.ContactId + " = ?", new string[] { id }, null);
+                    #region Email
 
-                        while (eCur.MoveToNext())
-                        {
-                            var email = eCur.GetString(eCur.GetColumnIndex(ContactsContract.CommonDataKinds.Email.Address));
-                            emails.Add(email);
-                        }
+                    var eCur = context.Query(Email.ContentUri, null, Email.InterfaceConsts.ContactId + " = ?", idQ, null);
 
-                        var projectionB = new[]
-                        {
-                            ContactsContract.Contacts.InterfaceConsts.Id, ContactsContract.CommonDataKinds.Event.StartDate
-                        };
+                    while (eCur.MoveToNext())
+                    {
+                        var email = eCur.GetString(eCur.GetColumnIndex(Email.Address));
+                        emails.Add(email);
+                    }
 
-                        var query = ContactsContract.CommonDataKinds.CommonColumns.Type + " = " + 3
-                       +" AND " + ContactsContract.CommonDataKinds.Event.InterfaceConsts.ContactId + " = ?";
+                    eCur.Close();
 
-                        var bCur = context.Query(ContactsContract.Data.ContentUri, projectionB, query, new string[] { id }, null);
+                    #endregion
 
-                        string e = null;
+                    #region BirthDay
+                    string b = string.Empty;
+                    if (name.Contains("EuMesmo"))
+                    {
+                        var query = CommonColumns.Type + " = " + 3
+                      + " AND " + Event.InterfaceConsts.ContactId + " = ?";
+
+                        var bCur = context.Query(ContactsContract.Data.ContentUri, null, query, idQ, null);
                         while (bCur.MoveToNext())
                         {
-                            var b = bCur.GetString(bCur.GetColumnIndex(projectionB[1]));
-                            DateTime.TryParse(b, out DateTime d);
-                            e = d.ToShortDateString().Contains("1/1/0001") ? string.Empty 
-                                : d.ToShortDateString();
+                            b = bCur.GetString(bCur.GetColumnIndex(Event.StartDate));
+                            //  bool t = false;
+                        }
+                        bCur.Close();
+                    }
+                    #endregion
+
+                    #region Address
+                    
+                    if (name.Contains("EuMesmo"))
+                    {
+                        var projectionS = new[] { StructuredPostal.Street, StructuredPostal.City, StructuredPostal.Postcode };
+                        var aCur = context.Query(ContactsContract.Data.ContentUri, projectionS, ContactsContract.Data.InterfaceConsts.ContactId + " = ?", idQ, null);
+                        while (aCur.MoveToNext())
+                        {
+                            var street = aCur.GetString(aCur.GetColumnIndex(StructuredPostal.Street));
+                            var city = aCur.GetString(aCur.GetColumnIndex(StructuredPostal.City));
+                            var postCode = aCur.GetString(aCur.GetColumnIndex(StructuredPostal.Postcode));
                         }
 
-                        eCur.Close();
-                        
-                        phoneContacts.Add(new PhoneContact(name, phoneNumber, emails,e));
-                        emails.Clear();
-                        phoneNumber.Clear();
-                        
+                        aCur.Close();
                     }
-                }
-            }
 
-            var batata = phoneContacts[5].Emails.FirstOrDefault();
-            cur.Close();
+                    #endregion
+
+                    phoneContacts.Add(new PhoneContact(name, phoneNumbers, emails, b));
+                    emails.Clear();
+                    phoneNumbers.Clear();
+                }
+                cur.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

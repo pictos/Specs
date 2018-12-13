@@ -8,7 +8,6 @@ namespace Plataforms
         public string Name { get; }
         public List<string> Numbers { get; }
         public List<string> Emails { get; }
-
         public string BirthDay { get; }
 
         internal PhoneContact(string name, IEnumerable<string> numbers, IEnumerable<string> emails, string bd)
@@ -26,7 +25,7 @@ namespace Plataforms
             !Equals(left, right);
 
         public override bool Equals(object obj) =>
-        (obj is PhoneContact contact) && Equals(contact);
+            (obj is PhoneContact contact) && Equals(contact);
 
         public bool Equals(PhoneContact other) =>
             (Name, Numbers, Emails) == (other.Name, other.Numbers, other.Emails);
