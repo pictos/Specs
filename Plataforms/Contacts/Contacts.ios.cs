@@ -8,7 +8,7 @@ namespace Plataforms
 {
     static partial class Contacts
     {
-        static void PlataformGetContacts(int ncontact)
+        static void PlataformGetContacts(int pageSize)
         {
             var keysToFetch = new[] { CNContactKey.GivenName, CNContactKey.FamilyName, CNContactKey.PhoneNumbers, CNContactKey.EmailAddresses };
 
@@ -24,11 +24,12 @@ namespace Plataforms
 
             foreach (var item in contactList)
             {
-
+               
                 var numbers = item.PhoneNumbers.Select(x => x.Value.StringValue);
                 var emails = item.EmailAddresses.Select(x => x.Value.ToString());
                 var bd = item.Birthday.Date.ToString();
                 var address = item.PostalAddresses.Select(x => x.Value.ToString());
+
                 contacts.Add(new PhoneContact(
                     item.GivenName + item.FamilyName,
                     numbers,

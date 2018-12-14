@@ -8,21 +8,7 @@ namespace Plataforms
 {
     static partial class Contacts
     {
-        static void PlataformGetContacts(int ncontact)
-        {
-            try
-            {
-                //Teste();
-                Final();
-            }
-            catch (System.Exception ex)
-            {
-                throw ex;
-            }
-
-        }
-
-        static void Final()
+        static void PlataformGetContacts(int pageSize)
         {
             try
             {
@@ -87,7 +73,7 @@ namespace Plataforms
                     #endregion
 
                     #region Address
-                    
+
                     if (name.Contains("EuMesmo"))
                     {
                         var projectionS = new[] { StructuredPostal.Street, StructuredPostal.City, StructuredPostal.Postcode };

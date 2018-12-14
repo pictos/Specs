@@ -8,6 +8,7 @@ namespace Plataforms
         public string Name { get; }
         public List<string> Numbers { get; }
         public List<string> Emails { get; }
+       
         public string BirthDay { get; }
 
         internal PhoneContact(string name, IEnumerable<string> numbers, IEnumerable<string> emails, string bd)
