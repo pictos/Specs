@@ -20,7 +20,7 @@ namespace Specs.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            (BindingContext as ViewModels.SignalViewModel).InitializeAsync(null);
+            (BindingContext as ViewModels.SignalViewModel).Initialize(null);
         }
     }
 }

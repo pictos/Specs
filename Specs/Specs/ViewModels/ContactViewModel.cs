@@ -30,12 +30,9 @@ namespace Specs.ViewModels
             Plataforms.Contacts.GetContacts(10);
         }
 
-        public override async Task InitializeAsync(object[] args)
+        public override Task InitializeAsync(object[] args)
         {
-
-
-
-            //return base.InitializeAsync(args);
+            return base.InitializeAsync(args);
         }
 
         void Contacts_CallBack(object sender, CallBackArgs e)
@@ -44,10 +41,7 @@ namespace Specs.ViewModels
             Contacts.Clear();
             mre = e.Mre;
             foreach (var item in e.Phones)
-            {
                 Contacts.Add(item);
-            }
-
         }
     }
 }

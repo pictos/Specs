@@ -17,7 +17,7 @@ namespace Specs.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            (BindingContext as ContactViewModel).InitializeAsync(null).Wait();
+            (BindingContext as ContactViewModel).Initialize(null).Wait();
         }
 
         async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
