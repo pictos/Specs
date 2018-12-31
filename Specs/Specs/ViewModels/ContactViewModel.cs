@@ -1,6 +1,8 @@
 ﻿using Plataforms;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -11,23 +13,50 @@ namespace Specs.ViewModels
     {
         public ObservableCollection<PhoneContact> Contacts { get; private set; } = new ObservableCollection<PhoneContact>();
 
-        public Command LoadCommand => new Command(LoadCommandExecute);
+        public Command LoadCommand => new Command(async () => await LoadCommandExecute());
 
         ManualResetEvent mre = new ManualResetEvent(true);
 
-        void LoadCommandExecute()
+        async Task LoadCommandExecute()
         {
-            Plataforms.Contacts.GetContacts(10);
 
-            Thread.Sleep(2000);
+            if (!IsBusy)
+            {
+                try
+                {
+                    IsBusy = true;
+                    var watch = new Stopwatch();
+                    watch.Start();
+                    var contacts = await Plataforms.Contacts.GetContacts(10);
+                    watch.Stop();
 
-            mre.Set();
+                    contacts = contacts.OrderBy(x => x.Name);
+
+                    await DisplayAlert("Tempo da query", watch.ElapsedMilliseconds.ToString());
+
+                    foreach (var item in contacts)
+                        Contacts.Add(item);
+                }
+                catch (Exception ex)
+                {
+
+                    await DisplayAlert("Erro", $"Erro:{ex.Message}", "Ok");
+                }
+                finally
+                {
+                    IsBusy = false;
+                }
+            }
+            return;
+            //Thread.Sleep(2000);
+
+            //mre.Set();
         }
 
         public ContactViewModel()
         {
-            Plataforms.Contacts.CallBack += Contacts_CallBack;
-            Plataforms.Contacts.GetContacts(10);
+           // Plataforms.Contacts.CallBack += Contacts_CallBack;
+           // Plataforms.Contacts.GetContacts(10);
         }
 
         public override Task InitializeAsync(object[] args)

@@ -19,7 +19,7 @@ namespace Plataforms
         //    CallBack?.Invoke(null,)
         //}
 
-        public static void GetContacts(int pageSize) => PlataformGetContacts(pageSize);
+        public static Task<IEnumerable<PhoneContact>> GetContacts(int pageSize) => PlataformGetContacts(pageSize);
     }
 
     public class CallBackArgs : EventArgs

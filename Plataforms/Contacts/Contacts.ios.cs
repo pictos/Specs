@@ -8,7 +8,7 @@ namespace Plataforms
 {
     static partial class Contacts
     {
-        static void PlataformGetContacts(int pageSize)
+        static Task<IEnumerable<PhoneContact>> PlataformGetContacts(int pageSize)
         {
             var keysToFetch = new[] { CNContactKey.GivenName, CNContactKey.FamilyName, CNContactKey.PhoneNumbers, CNContactKey.EmailAddresses };
 
@@ -37,8 +37,8 @@ namespace Plataforms
                     bd));
 
             }
-
-          //  return Task.FromResult(contacts.AsEnumerable());
+            
+            return Task.FromResult(contacts.AsEnumerable());
         }
     }
 }

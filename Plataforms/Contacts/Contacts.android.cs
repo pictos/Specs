@@ -2,13 +2,15 @@
 using Android.Provider;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using static Android.Provider.ContactsContract.CommonDataKinds;
 
 namespace Plataforms
 {
     static partial class Contacts
     {
-        static void PlataformGetContacts(int pageSize)
+        static Task<IEnumerable<PhoneContact>> PlataformGetContacts(int pageSize)
         {
             try
             {
@@ -20,7 +22,7 @@ namespace Plataforms
 
                 var cur = context.Query(uri, null, null, null, null);
 
-                if (cur is null | cur.Count == 0) return;
+                if (cur is null | cur.Count == 0) return null;
 
                 while (cur.MoveToNext())
                 {
@@ -95,6 +97,8 @@ namespace Plataforms
                     phoneNumbers.Clear();
                 }
                 cur.Close();
+
+                return Task.FromResult(phoneContacts.AsEnumerable());
             }
             catch (Exception ex)
             {

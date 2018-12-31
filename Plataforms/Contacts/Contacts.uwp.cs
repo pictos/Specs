@@ -3,12 +3,13 @@ using System.Linq;
 using System.Collections.Generic;
 
 using Windows.ApplicationModel.Contacts;
+using System.Threading.Tasks;
 
 namespace Plataforms
 {
     static partial class Contacts
     {
-        static async void PlataformGetContacts(int pageSize)
+        static async Task<IEnumerable<PhoneContact>> PlataformGetContacts(int pageSize)
         {
             var phoneContacts = new List<PhoneContact>();
 
@@ -36,13 +37,15 @@ namespace Plataforms
                 var name = item.FirstName + item.MiddleName + item.LastName;
                 var date = item.ImportantDates.FirstOrDefault(x => x.Kind == ContactDateKind.Birthday);
 
-                var myd = $"{date.Day}/{date.Month}/{date.Year}";
-                var teste = date.ToString(); 
+                var myd = $"{date?.Day}/{date?.Month}/{date?.Year}";
+                var teste = date?.ToString(); 
 
 
                 phoneContacts.Add(new PhoneContact(item.DisplayName, phones, emails, null));
                 i++;
             }
+
+            return phoneContacts;
         }
     }
 }

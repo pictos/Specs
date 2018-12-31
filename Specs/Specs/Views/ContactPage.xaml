@@ -4,20 +4,25 @@
              x:Class="Specs.Views.ContactPage">
     <ContentPage.Content>
         <StackLayout Padding="10">
-            <Label Text="Loaded"
-               HorizontalOptions="Center"
-               FontAttributes="Bold">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding LoadCommand}"/>
-                </Label.GestureRecognizers>
-            </Label>
+
+            <Button Text="Loaded"
+                    Command="{Binding LoadCommand}"/>
+
+            <ActivityIndicator IsEnabled="{Binding IsBusy}"
+                               IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"/>
+            
             <ListView ItemsSource="{Binding Contacts}"
-                  ItemTapped="ListView_ItemTapped"
-                  CachingStrategy="RecycleElement">
+                      ItemTapped="ListView_ItemTapped"
+                      CachingStrategy="RecycleElement"
+                      ItemAppearing="ListView_ItemAppearing">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Name}"
-                              Detail="{Binding Number}"/>
+                        <ViewCell>
+                            <ContentView>
+                                <Label Text="{Binding Name}"/>
+                            </ContentView>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

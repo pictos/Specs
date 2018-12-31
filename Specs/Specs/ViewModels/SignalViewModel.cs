@@ -18,7 +18,7 @@ namespace Specs.ViewModels
         void ExecuteSignalCommand() => 
             Signal = $" Signal power : {Plataforms.Signal.SignalStrenght}";
 
-        public override Task Initialize(object[] args)
+        public override Task InitializeAsync(object[] args)
         {
             Signal = $" Signal power : {Plataforms.Signal.SignalStrenght}";
             return Task.CompletedTask;
